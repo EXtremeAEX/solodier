@@ -2,83 +2,196 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+void functionCountBar(int type, int maxType)
+    {
+        int countBar=10,count;
+        count=type*10/maxType;
+        while(count!=0){
+            printf("-");
+            count--;
+        }
+        count=type*10/maxType;
+        while(countBar-count!=0){
+            printf(" ");
+            countBar--;
+        }
+    }
+void shopFunction(int input,int weaponCost){}
 int main()
 {
-    bool tutorial=1,gameEnd=0,story1=1,monsterEncounter,death=0;
-    int maxHealth=100,health=maxHealth,lvl=1,expReq=lvl*15+lvl*lvl/lvl*3,exp=0,expPercentage,attack=15/*,defend=5,defendTurn=0,critical=5,accuracy=100*/,input,monsterType,monsterAttack,monsterHealth,monMaxHealth,monHealthPercentage,healthPercentage,countBar=10,runChance=0;
-    int monster[]={/*1*/20,5,15,/*2*/25,10,25,/*3*/30,15,40,/*4*/100,15,70,/*5*/45,25,65,/*6*/55,30,80};
+    bool tutorial1=1,tutorial2=0,gameEnd=0,story1=1,story2=0,monsterEncounter,death=0,shopKeeper=0,shop=0,tanier=1;
+    int lvl=1,maxHealth=95+lvl*5,maxEnergy=25+lvl*5,attack=8+lvl*2,defend=lvl*3+2;
+    int health=maxHealth,energy=maxEnergy,expReq=lvl*50+(lvl*15/2+17),exp=0,expPercentage,defendTurn=0,/*critical=5,accuracy=100*/input;
+    int monsterType,monsterAttack,monsterHealth,monMaxHealth,count,runChance=0;
+    int gold=0,goldEarned=0,weaponEquip=0;
+    int weaponLvl,weaponExp,weaponExpReq=weaponLvl*75+25;
+    int monster[]={/*1*/25,10,15,/*2*/35,15,25,/*3*/45,20,40,/*4*/300,20,70,/*5*/450,30,65,/*6*/550,35,80}; //1st  -> Health 2nd -> Attack 3rd ->Exp
+    int weapon[]={/*1*/0,5,1,/*2*/0,8,2,/*3*/0,12,3,/*4*/0,20,1,/*5*/0,25,1,/*6*/0,35,2,/*7*/0,40,3,/*8*/0,60,4}; //1st -> 1 if you own it 2nd -> Atk 3rd -> Weapon type
+    int weaponSkillLvl[]={/*1*/1,0,5};
+    char weaponNames[][15]={"Axe","Staff","Doub'o'Dagger","Trip'o'Sword","Tanier's Sword","Crystal Staff","Doom Dagger","Phoenix EX"};
     while(gameEnd==0){
-    if(tutorial==1){
+    maxHealth=95+lvl*5,maxEnergy=25+lvl*5,attack=8+lvl*2,defend=lvl*3+2;
+    if(weaponEquip!=0){
+        attack=8+lvl*2+weapon[weaponEquip*3-2];
+    }
+    if(tutorial1==1){
         printf("Years ago, there was a planet named Darth.\n\n\n");
         printf("However,an experimental mistake in planet Mystique caused Darth to be demolished...\n\n\n");
         printf("The Darths have nowhere to go, and thus invaded Mystique in anger.\n\n");
         printf("Mystique was not able to defend herself, and soon, Darth took over.\n\n\n\nENTER TO CONTINUE...\n\n");
         getchar();
         printf("All the Mystiquz died, except for one...");
-        printf("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\tSOLODIER\n\n\n\n\n\n\n\n\n\n\n\n");
-        tutorial=0;
+        printf("\n\n\n\n\n\n\n\n\n\n\n\t\t\t\tSOLODIER\n\n\n\n\n\n\n\n");
+        tutorial1=0;
+    }
+    if(tutorial2==1){
+        printf("The weapon in your hands suddenly glow brightly...\n\n\n");
+        printf("You clutched it vigorously, finding yourself waving it uncontrollably.\n\n\n\n\n\n");
+        printf("ENTER TO CONTINUE...\n\n\n\n\n");
+        getchar();
+        printf("Congrats, solodier!! You have just unlocked your first skill!\\n\n");
+        printf("Now fight more and train your skills, and protect Mystique from enemies... and even friends...\n\n\n");
+        printf(".\n\n...\n\n.....\n\nYou woke up with migraine, yet excited to use skills for the first time...\n\n\n");
+        tutorial2=0;
     }
     if(story1==1){
-        printf("ENTER TO CONTINUE...");
+        printf("ENTER TO CONTINUE...\n\n\n\n\n");
         getchar();
-        getchar();
-        printf("You woke up, finding yourself in a land completely wrecked,\n\n\tand covered with debris all around.\n\n");
-        printf("Soon, you hear loud roar.\n\n\tBefore you could react, it was too late...\n\n\t");
-        printf("Quickly, you picked up a nearby stick to defend yourself...\n");
+        printf("You woke up, finding yourself in a land completely wrecked,\n\n\n\tand covered with debris all around.\n\n\n");
+        printf("Soon, you hear loud roar.\n\n\n\tBefore you could react, it was too late...\n\n\n\t");
+        printf("Quickly, you picked up a nearby stick to defend yourself...\n\n\n\n\n\n");
         monsterType=1;
         monsterEncounter=1;
         story1=0;
+    }
+    if(story2==1){
+        printf("Just when you were about to enter another dungeon, you heard a faint sound.\n\n\n");
+        printf("You turned around, and saw your old best friend, holding a sword.\n\n\n");
+        printf("He started running towards you...\n\n");
+        do{
+        printf("<1>Kill him!!\n<2>Wait.\n");
+        scanf("%d",&input);
+        if(input==1){
+            printf("Holding back your tears, you managed to defeat him.\n\n");
+            printf("Your old friend now lies died, motionlessly on the ground...\n\n");
+            printf("You picked up the sword next to him and left.\n");
+            tanier=0;
+            weapon[12]=1;
+            story2=0;
+        }
+        else if(input==2){
+            printf("\t\t'Hey!'\n\n'...'\n\n\t\t'Dont worry,Im here to help!'\n\n");
+            printf("He spoke to you about the core of Mystique, which left you completely lost.\n\n");
+            printf("Then he decided to help you defend the core of Mystique too by selling you weapons...\n\n");
+            printf("\n\n\tSOLODIER : A NEW BEGINNING\n\nENTER TO CONTINUE...");
+            getchar();
+            printf("Meet Tanier, the shopkeeper.\n\nTrade the gold you found to him so he could craft weapons out of it.\n\n");
+            printf("Good Luck Solodier. Mystique needs your help.\n\n");
+            printf("ENTER TO CONTINUE...\n");
+            getchar();
+            story2=0;
+            shopKeeper=1;
+        }
+        else printf("?\n");
+        }while(story2!=0);
+        monsterEncounter=0;
+    }
+    if(shop==1){
+        printf("You enter the shop, only to be greeted by Tanier.\n\n\nGold you have : %d",gold);
+        while(shop==1){
+        printf("Hey! Welcome!\n\n<1>Axe --> 50 gold\n<2>Staff --> 200 gold\n<3>Doub'o'Dagger --> 350 gold\n<4>Trip'o'Sticko --> 1000 gold\n<5>Leave.\n\n\n");
+        scanf("%d",&input);
+        if(input==1){
+            if(gold<50){
+                printf("You dont have enough gold for me to craft an axe!!\n\n");
+            }
+            else{
+                printf("Ooh!! Ill take that! Here's your axe!!\n\n");
+                weapon[input*3-3]=1;
+                gold-=50;
+            }
+        }
+        else if(input==2){
+            if(gold<200){
+                printf("You dont have enough gold for me to craft that super staff!!\n\n");
+            }
+            else{
+                printf("OOOH YEAH!! Ill take that! Here's your staff!!\n\n");
+                weapon[input*3-3]=1;
+                gold-=200;
+            }
+        }
+        else if(input==3){
+            if(gold<350){
+                printf("You dont have enough goldddddddd!!!!!\n\n");
+            }
+        }
+        else if(input==4){}
+        else if(input==5){shop=0;}
+        }
+        printf("Thanks! Come back soon!!\n\n\n");
     }
     if(monsterEncounter==1){
         monsterHealth=monster[monsterType*3-3];
         monsterAttack=monster[monsterType*3-2];
         monMaxHealth=monsterHealth;
-        printf("ENTER TO CONTINUE...\n\n");
-        getchar();
+        printf("ENTER TO CONTINUE...\n\n\n\n\n");
         getchar();
         while(monsterHealth>0&&death!=1){
-        monHealthPercentage=monsterHealth*10/monMaxHealth;
         printf("Monster Health left -- <");
-        while(monHealthPercentage!=0){
-            printf("-");
-            monHealthPercentage--;
-        }
-        monHealthPercentage=monsterHealth*10/monMaxHealth;
-        while(countBar-monHealthPercentage!=0){
-            printf(" ");
-            countBar--;
-        }
+        functionCountBar(monsterHealth,monMaxHealth);
         printf(">  %d / %d\nYour Health left -- <",monsterHealth,monMaxHealth);
-        countBar=10;
-        healthPercentage=health*10/maxHealth;
-        while(healthPercentage!=0){
-            printf("-");
-            healthPercentage--;
-        }
-        healthPercentage=health*10/maxHealth;
-        while(countBar-healthPercentage!=0){
-            printf(" ");
-            countBar--;
-        }
-        printf(">   %d / %d",health,maxHealth);
-        countBar=10;
-        printf("\n\n<1>Attack!\n<2>Defend!/*Not available*/\n<3>Skill Attack!/*Not available*/\n<4>Run!\n\n\n");
+        functionCountBar(health,maxHealth);
+        printf(">   %d / %d\nEnergy left -- <",health,maxHealth);
+        functionCountBar(energy,maxEnergy);
+        printf(">  %d / %d\n",energy,maxEnergy);
+        printf("\n\n<1>Attack!/*5 energy*/\n<2>Defend!/*Not available*/\n<3>Skill Attack!/*Not available*/\n<4>Run!\n\n\n");
         scanf("%d",&input);
         if(input==1){
-            monsterHealth-=attack;
-            printf("You attacked the monster, dealing %d damage!!\n\n",attack);
+            if(energy<5){
+                printf("You dont have enough energy!\n");
+            }
+            else{
+                monsterHealth-=attack;
+                energy-=5;
+                printf("You attacked the monster, dealing %d damage!!\n\n",attack);
+            }
         }
-        else if(input==2||3){
+        else if(input==2){
+            defendTurn=3;
+            if((energy+3)>maxEnergy){
+                energy=maxEnergy;
+            }
+            else energy+=3;
+            printf("You raised your guard, resting.");
+        }
+        else if(input==3){
             printf("Blah blah\n\n");
+            //+3 energy
         }
         else if(input==4&&runChance==0){
             printf("You cant run!\n\n");
         }
         else{
-            printf("You fumbled.\n\n");
+            printf("You fumbled, losing some energy!!\n\n");
+            if(energy<5){
+                energy=0;
+            }
+            else{
+            energy-=5;
+            }
         }
+        if(defendTurn>0){
+            printf("The monster attacked you,but you defended,reducing damage taken by %d!!\n\n",defend);
+            defendTurn--;
+            if(monsterAttack>defend){
+                health-=(monsterAttack-defend);
+            }
+        }
+        else{
         printf("The monster attacked you, dealing %d damage!!\n\n",monsterAttack);
         health-=monsterAttack;
+        }
         if(health<=0){
             printf("You died!\n");
             death=1;
@@ -90,31 +203,32 @@ int main()
                 exp-=expReq;
                 lvl++;
                 printf("You've became stronger!!\n");
-                attack+=2;
-                maxHealth+=5;
-                expReq=(lvl*15)+(lvl*lvl)/(lvl*3);
+                expReq=lvl*50+(lvl*15/2+17);
             }
         printf("\n\nYour exp  -- <");
-        expPercentage=exp*10/expReq;
-        while(expPercentage!=0){
-            printf("-");
-            expPercentage--;
-        }
-        expPercentage=exp*10/expReq;
-        while(countBar-expPercentage!=0){
-            printf(" ");
-            countBar--;
-        }
+        functionCountBar(exp,expReq);
         printf(">  %d / %d\n\n",exp,expReq);
-        countBar=10;
+        goldEarned=monsterType*5+5;
+        gold+=goldEarned;
+        printf("You got %d gold!\n\n",goldEarned);
         }
         }
         monsterEncounter=0;
         if(death==1){
-            printf("You woke up, lucky to have survived.\n\nQuickly,you took a rest and regained health.\n\n\t\tHealth --> %d",maxHealth);
+            printf("You woke up, lucky to have survived.\n\nQuickly,you took a rest and regained health.\n\n\t\tHealth --> %d\n\n\n",maxHealth);
+            death=0;
         }
+        energy=maxEnergy;
         health=maxHealth;
-        printf("<1>Easy Dungeon!\n<2>Cave...\n<3>Fire Dungeon...\n<4>Derp Derp!!\n<5>Hibernate~~(Exit Game)");
+    }
+        if(gold>=50&&tanier!=0){
+            story2=1;
+        }
+        printf("<1>Easy Dungeon!\n<2>Cave...\n<3>Fire Dungeon...\n<4>Stats\n<5>Inventory\n");
+        if(shopKeeper==1){
+            printf("<6>Shop!\n");
+        }
+        printf("<10>Hibernate~~(Exit Game)");
         scanf("%d",&input);
         if(input==1){
             monsterEncounter=1;
@@ -129,9 +243,34 @@ int main()
             monsterType=4;
         }
         else if(input==4){
-            printf("Lol.\n");
+            printf("Your stats:\n\nHealth --> %d\nEnergy --> %d\nAttack --> %d\nGold --> %d\n\n",health,energy,attack,gold);
         }
         else if(input==5){
+            printf("\n\n\n\n****Inventory****\n\n\nWeapons:\n");
+            for(count=1;count!=8;count++){
+                printf("<%d> ",count);
+                if(weapon[count*3-3]==1){
+                    printf("%s   +%d Atk\n",weaponNames[count-1],weapon[count*3-2]);
+                    if(weaponEquip==count){
+                        printf("  <Equipped>\n");
+                    }
+                }
+                else printf(" --\n");
+            }
+            printf("\nInput the number of the weapon to equip, anything to exit.\n");
+            scanf("%d",&input);
+            if(input>=1&&input<=8){
+                if(weapon[input*3-3]==1){
+                    printf("You equipped %s!!\n",weaponNames[input-1]);
+                    weaponEquip=input;
+                }
+            }
+            else printf("Weapon not available... yet?");
+        }
+        else if(input==6&&shopKeeper==1){
+            shop=1;
+        }
+        else if(input==10){
             gameEnd=1;
             printf("Are you sure? Type 1 for yes.");
             scanf("%d",&input);
@@ -140,11 +279,12 @@ int main()
             }
         }
         else printf("Blah Blah Blah.");
-        getchar();
-    }
+        if(weaponEquip>0){
+        }
     }
     return 0;
 }
+
 //pet feature coming soon
 //endless dungeons
 //save file
