@@ -1,6 +1,7 @@
-#Solodier
+# Solodier
 
-##Prologue
+## Prologue
+
 In a faraway place, somewhere beyond the milky way, the was two planet Darth and Mystique who was in peace with one another.
 
 Darth was a planet where they train there monster hybrids for defence against the other planets, whereas in another planet..
@@ -13,8 +14,7 @@ The Darths have nowhere to go and were very angry, invading Mystique.
 
 One by one, the creatures in Mystique, the Mystiquz, were killed, but one survived.
 
-
-##Story
+## Story
 
 You woke up, feeling dizzy, finding yourself in a completely wrecked place, covered with debris all around. 
 
